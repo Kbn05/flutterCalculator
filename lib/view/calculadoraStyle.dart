@@ -15,6 +15,7 @@ class _CalculatorViewState extends State<CalculatorView> {
   var val2 = '0';
   var result = '0';
   var operation = "";
+  String? error;
 
   @override
   Widget build(BuildContext context) {
@@ -216,38 +217,52 @@ class _CalculatorViewState extends State<CalculatorView> {
                           botonAccion: () {
                             val2 = _controller.text;
                             _controller.clear();
-                            switch (operation) {
-                              case "+":
-                                result =
-                                    (double.parse(val1) + double.parse(val2))
+                            try {
+                              switch (operation) {
+                                case "+":
+                                  result =
+                                      (double.parse(val1) + double.parse(val2))
+                                          .toString();
+                                  break;
+                                case "-":
+                                  result =
+                                      (double.parse(val1) - double.parse(val2))
+                                          .toString();
+                                  break;
+                                case "x":
+                                  result =
+                                      (double.parse(val1) * double.parse(val2))
+                                          .toString();
+                                  break;
+                                case "/":
+                                  if (double.parse(val2) == 0) {
+                                    result = "Error";
+                                    break;
+                                  } else {
+                                    result = (double.parse(val1) /
+                                            double.parse(val2))
                                         .toString();
-                                break;
-                              case "-":
+                                  }
+                                  break;
+                                case "%":
+                                  result = ((double.parse(val1) *
+                                              double.parse(val2)) /
+                                          100)
+                                      .toString();
+                                  break;
+                              }
+                              if (double.parse(result) % 1 == 0) {
                                 result =
-                                    (double.parse(val1) - double.parse(val2))
-                                        .toString();
-                                break;
-                              case "x":
-                                result =
-                                    (double.parse(val1) * double.parse(val2))
-                                        .toString();
-                                break;
-                              case "/":
-                                result =
-                                    (double.parse(val1) / double.parse(val2))
-                                        .toString();
-                                break;
-                              case "%":
-                                result =
-                                    (double.parse(val1) % double.parse(val2))
-                                        .toString();
-                                break;
+                                    double.parse(result).toInt().toString();
+                              }
+                              _controller.text = result;
+                              val1 = '0';
+                              val2 = '0';
+                              result = '0';
+                              operation = "";
+                            } catch (e) {
+                              _controller.text = "Error";
                             }
-                            _controller.text = result;
-                            val1 = '0';
-                            val2 = '0';
-                            result = '0';
-                            operation = "";
                           },
                           textoButton: "=",
                         ),
