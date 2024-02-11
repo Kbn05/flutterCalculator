@@ -27,7 +27,7 @@ class MyBoton extends StatelessWidget {
           botonAccion();
         },
         style: ButtonStyle(
-          fixedSize: MaterialStateProperty.all(size ?? const Size(70, 40)),
+          fixedSize: MaterialStateProperty.all(size ?? const Size(80, 70)),
           backgroundColor: MaterialStateProperty.all(
               color ?? const Color.fromARGB(255, 103, 113, 121)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
